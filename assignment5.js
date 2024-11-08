@@ -3,13 +3,10 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 
-
-// Serve static files from public directory
 app.use(express.static('public'));
 
-// Route to serve JSON data
 app.get('/api/cards', (req, res) => {
-    fs.readFile(path.join(__dirname, 'data', 'cards.json'), 'utf8', (err, data) => {
+    fs.readFile(path.join(__dirname, 'data', 'pokemon.json'), 'utf8', (err, data) => {
         if (err) {
             res.status(500).send('Error reading cards data');
             return;
@@ -18,14 +15,30 @@ app.get('/api/cards', (req, res) => {
     });
 });
 
-// Route to serve HTML snippet
 app.get('/api/featured-cards', (req, res) => {
-    fs.readFile(path.join(__dirname, 'data', 'featured-cards.html'), 'utf8', (err, data) => {
+    fs.readFile(path.join(__dirname, 'html', 'magic.html'), 'utf8', (err, data) => {
         if (err) {
             res.status(500).send('Error reading featured cards');
             return;
         }
         res.send(data);
+    });
+});
+
+app.get('/api/card/:id', (req, res) => {
+    fs.readFile(path.join(__dirname, 'data', 'pokemon.json'), 'utf8', (err, data) => {
+        if (err) {
+            res.status(500).send('Error reading card data');
+            return;
+        }
+        const cards = JSON.parse(data);
+        const card = cards[req.params.id];
+        
+        if (card) {
+            res.json(card);
+        } else {
+            res.status(404).send('Card not found');
+        }
     });
 });
 

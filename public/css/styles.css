@@ -290,3 +290,56 @@ section h2 {
         max-width: 100%;
     }
 }
+
+.card-detail-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--card-background);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.card-detail-image {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 2rem;
+    display: block;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card-detail-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.card-detail-info {
+    display: grid;
+    gap: 1rem;
+}
+
+.card-detail-info p {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.card-detail-info span {
+    font-weight: 600;
+}
+
+.card-detail-cost {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #ffd700;
+    color: #000;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
