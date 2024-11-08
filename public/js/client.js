@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch Magic cards HTML
     fetch('/api/featured-cards')
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.text(); // Make sure we're expecting text, not JSON
+        })
         .then(html => {
             document.getElementById('magic-container').innerHTML = html;
         })
@@ -18,7 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch Pokemon cards JSON
     fetch('/api/cards')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json(); // For pokemon cards we expect JSON
+        })
         .then(cards => {
             const container = document.getElementById('pokemon-container');
             cards.forEach((card, index) => {
@@ -31,11 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 cardElement.className = 'card';
                 
                 const rarityClass = `rarity-${card.rarity.toLowerCase().replace(/\s+/g, '-')}`;
-                const imagePath = getImagePath(card.name);
                 
                 cardElement.innerHTML = `
                     <div class="card-image">
-                        <img src="${imagePath}" 
+                        <img src="${getImagePath(card.name)}" 
                              alt="${card.name}"
                              loading="lazy"
                              onerror="this.onerror=null; this.src='/api/placeholder/300/400';">

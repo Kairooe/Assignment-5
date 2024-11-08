@@ -3,45 +3,45 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 
+// Middleware
+app.use(express.json());
 app.use(express.static('public'));
 
+// Route for Pokemon cards JSON
 app.get('/api/cards', (req, res) => {
-    fs.readFile(path.join(__dirname, 'data', 'pokemon.json'), 'utf8', (err, data) => {
+    const filePath = path.join(__dirname, 'app', 'data', 'pokemon.json');
+    
+    fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
+            console.error('Error reading pokemon.json:', err);
             res.status(500).send('Error reading cards data');
             return;
         }
-        res.json(JSON.parse(data));
+        try {
+            const jsonData = JSON.parse(data);
+            res.json(jsonData);
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+            res.status(500).send('Invalid JSON format');
+        }
     });
 });
 
+// Route for Magic cards HTML
 app.get('/api/featured-cards', (req, res) => {
-    fs.readFile(path.join(__dirname, 'html', 'magic.html'), 'utf8', (err, data) => {
+    const filePath = path.join(__dirname, 'app', 'html', 'magic.html');
+    
+    fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
+            console.error('Error reading magic.html:', err);
             res.status(500).send('Error reading featured cards');
             return;
         }
-        res.send(data);
+        res.type('text/html').send(data);
     });
 });
 
-app.get('/api/card/:id', (req, res) => {
-    fs.readFile(path.join(__dirname, 'data', 'pokemon.json'), 'utf8', (err, data) => {
-        if (err) {
-            res.status(500).send('Error reading card data');
-            return;
-        }
-        const cards = JSON.parse(data);
-        const card = cards[req.params.id];
-        
-        if (card) {
-            res.json(card);
-        } else {
-            res.status(404).send('Card not found');
-        }
-    });
-});
-
-app.listen(8000, () => {
-    console.log('Server running on port 8000');
+const PORT = 8000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
