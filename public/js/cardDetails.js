@@ -6,16 +6,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (type === 'magic') {
         try {
-            // For magic cards - fetch from HTML
-            const response = await fetch('/html/magic.html');
+            const response = await fetch('/api/featured-cards');
             const html = await response.text();
             
-            // Create a temporary container to parse HTML
             const tempContainer = document.createElement('div');
             tempContainer.innerHTML = html;
             
-            // Find the specific card
-            const cardElement = tempContainer.querySelector(`a[href="/cardDetails.html?type=magic&id=${id}"]`);
+            const cardElement = tempContainer.querySelectorAll('a')[id];
             
             if (!cardElement) {
                 container.innerHTML = '<p>Magic card not found</p>';
@@ -31,7 +28,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 rarity: cardElement.querySelector('.rarity-label').textContent
             };
 
-            // Display the card details
             container.innerHTML = `
                 <div class="card-detail">
                     <div class="card-detail-image">
@@ -53,13 +49,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.innerHTML = '<p>Error loading magic card details</p>';
         }
     } else if (type === 'pokemon') {
-        // For pokemon cards - fetch from JSON
         try {
-            const response = await fetch('/data/pokemon.json');
+            const response = await fetch('/api/cards');
             const cards = await response.json();
-            
             const card = cards.find(c => c.id === id);
-            
+
             if (!card) {
                 container.innerHTML = '<p>Pokemon card not found</p>';
                 return;
@@ -68,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.innerHTML = `
                 <div class="card-detail">
                     <div class="card-detail-image">
-                        <img src="/images/${card.image}" alt="${card.name}" loading="lazy">
+                        <img src="/images/${card.name.replace(/\s+/g, '-')}.jpg" alt="${card.name}" loading="lazy">
                     </div>
                     <div class="card-detail-info">
                         <h2>${card.name}</h2>

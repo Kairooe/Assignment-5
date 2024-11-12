@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Function to convert card name to image filename
     const getImagePath = (cardName) => {
         return `/images/${cardName.replace(/\s+/g, '-')}.jpg`;
     };
@@ -8,10 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/api/featured-cards')
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
-            return response.text(); // Make sure we're expecting text, not JSON
+            return response.text();
         })
         .then(html => {
-            document.getElementById('magic-container').innerHTML = html;
+            const container = document.getElementById('magic-container');
+            container.innerHTML = html;
+
+            // Update Magic card links with correct URLs
+            const cardLinks = container.querySelectorAll('a');
+            cardLinks.forEach((link, index) => {
+                link.href = `/cardDetails.html?type=magic&id=${index}`;
+            });
         })
         .catch(error => {
             console.error('Error loading magic cards:', error);
@@ -23,21 +29,21 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/api/cards')
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
-            return response.json(); // For pokemon cards we expect JSON
+            return response.json();
         })
         .then(cards => {
             const container = document.getElementById('pokemon-container');
-            cards.forEach((card, index) => {
+            cards.forEach(card => {
                 const cardLink = document.createElement('a');
-                cardLink.href = `/cardDetails.html?id=${index}`;
+                cardLink.href = `/cardDetails.html?type=pokemon&id=${card.id}`;
                 cardLink.style.textDecoration = 'none';
                 cardLink.style.color = 'inherit';
 
                 const cardElement = document.createElement('div');
                 cardElement.className = 'card';
-                
+
                 const rarityClass = `rarity-${card.rarity.toLowerCase().replace(/\s+/g, '-')}`;
-                
+
                 cardElement.innerHTML = `
                     <div class="card-image">
                         <img src="${getImagePath(card.name)}" 
@@ -55,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>
                 `;
-                
+
                 cardLink.appendChild(cardElement);
                 container.appendChild(cardLink);
             });
