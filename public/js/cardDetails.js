@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 set: cardElement.querySelector('.card-info p:nth-child(1)').textContent.split(':')[1].trim(),
                 condition: cardElement.querySelector('.card-info p:nth-child(2)').textContent.split(':')[1].trim(),
                 year: cardElement.querySelector('.card-info p:nth-child(3)').textContent.split(':')[1].trim(),
-                rarity: cardElement.querySelector('.rarity-label').textContent
+                rarity: cardElement.querySelector('.rarity-label').textContent,
+                cost: cardElement.querySelector('.card-info p:nth-child(5)').textContent.split(':')[1].trim(),
             };
 
             container.innerHTML = `
@@ -39,6 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <p><strong>Set:</strong> ${cardInfo.set}</p>
                             <p><strong>Condition:</strong> ${cardInfo.condition}</p>
                             <p><strong>Year:</strong> ${cardInfo.year}</p>
+                            <p><strong>Cost:</strong> ${cardInfo.cost}</p>
                             <p><strong>Rarity:</strong> ${cardInfo.rarity}</p>
                         </div>
                     </div>
@@ -70,8 +72,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <p><strong>Set:</strong> ${card.set}</p>
                             <p><strong>Condition:</strong> ${card.condition}</p>
                             <p><strong>Year:</strong> ${card.year}</p>
-                            <p><strong>Rarity:</strong> ${card.rarity}</p>
                             <p><strong>Cost:</strong> ${card.cost}</p>
+                            <p><strong>Rarity:</strong> ${card.rarity}</p>
                         </div>
                     </div>
                 </div>

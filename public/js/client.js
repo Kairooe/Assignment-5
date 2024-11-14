@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p><span>Set:</span> ${card.set}</p>
                         <p><span>Condition:</span> ${card.condition}</p>
                         <p><span>Year:</span> ${card.year}</p>
+                        <p><span>Cost:</span> ${card.cost}</p>
                         <div class="rarity-label ${rarityClass}">
                             ${card.rarity}
                         </div>

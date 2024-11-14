@@ -3,9 +3,13 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 
-// Middleware
 app.use(express.json());
 app.use(express.static('public'));
+
+const PORT = 8000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
 
 // Route for Pokemon cards JSON
 app.get('/api/pokemon-cards', (req, res) => {
@@ -41,7 +45,3 @@ app.get('/api/magic-cards', (req, res) => {
     });
 });
 
-const PORT = 8000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
