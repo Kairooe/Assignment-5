@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (type === 'magic') {
         try {
-            const response = await fetch('/api/featured-cards');
+            const response = await fetch('/api/magic-cards');
             const html = await response.text();
             
             const tempContainer = document.createElement('div');
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     } else if (type === 'pokemon') {
         try {
-            const response = await fetch('/api/cards');
+            const response = await fetch('/api/pokemon-cards');
             const cards = await response.json();
             const card = cards.find(c => c.id === id);
 

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Fetch Magic cards HTML
-    fetch('/api/featured-cards')
+    fetch('/api/magic-cards')
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
             return response.text();
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     // Fetch Pokemon cards JSON
-    fetch('/api/cards')
+    fetch('/api/pokemon-cards')
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
