@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 condition: cardElement.querySelector('.card-info p:nth-child(2)').textContent.split(':')[1].trim(),
                 year: cardElement.querySelector('.card-info p:nth-child(3)').textContent.split(':')[1].trim(),
                 rarity: cardElement.querySelector('.rarity-label').textContent,
-                cost: cardElement.querySelector('.card-info p:nth-child(5)').textContent.split(':')[1].trim(),
+                cost: cardElement.querySelector('.card-info p:nth-child(4)').textContent.split(':')[1].trim(),
             };
 
             container.innerHTML = `
